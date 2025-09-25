@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "191341556748",
+    "project_id": "cat-tarot-56be0",
+    "storage_bucket": "cat-tarot-56be0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191341556748:android:4c9f0e7f5c2bd363fb6a29",
+        "android_client_info": {
+          "package_name": "com.example.porfolio_yhk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHnLt6YxxFpeGmPc3Pz0lOYGKbB7SszYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191341556748:android:788cff8340995c52fb6a29",
+        "android_client_info": {
+          "package_name": "com.example.tarot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHnLt6YxxFpeGmPc3Pz0lOYGKbB7SszYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
