@@ -43,15 +43,6 @@ class MobileLayout extends StatefulWidget {
 
 class _MobileLayoutState extends State<MobileLayout> {
   final cardController = Get.put(CardController());
-
-  @override
-  void initState() {
-    super.initState();
-    if (cardController.selectedCard.length != 3) {
-      Get.offAllNamed("/");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,6 +74,7 @@ class _MobileLayoutState extends State<MobileLayout> {
                 ),
               ),
               SizedBox(height: 20),
+          
               RowOrColumn(
                 isRow: false,
                 children: [
@@ -264,6 +256,7 @@ class ExpandedOrContainer extends StatelessWidget {
     return isExpanded
         ? Expanded(child: child)
         : Container(
+            height: 400,
             child: child,
           );
   }
@@ -426,7 +419,7 @@ class _ResultCardState extends State<ResultCard> {
                                         (ft) => Text(
                                           "\t \t\u2022 ${ft.toString().capitalize!}",
                                           style: Get.theme.textTheme.bodyLarge,
-                                          maxLines: 2,
+                                          maxLines: 4,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       )
