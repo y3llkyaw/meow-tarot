@@ -156,8 +156,13 @@ class CardBackSide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      "image/back.png",
+      "assets/image/back.png",
       width: 200,
+      errorBuilder: (context, error, stackTrace) => Image.asset(
+        "assets/assets/image/back.png",
+        errorBuilder: (context, error, stackTrace) =>
+            Image.asset("image/back.png"),
+      ),
     );
   }
 }
