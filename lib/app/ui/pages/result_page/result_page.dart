@@ -74,7 +74,7 @@ class _MobileLayoutState extends State<MobileLayout> {
                 ),
               ),
               SizedBox(height: 20),
-              Spacer(),
+          
               RowOrColumn(
                 isRow: false,
                 children: [
