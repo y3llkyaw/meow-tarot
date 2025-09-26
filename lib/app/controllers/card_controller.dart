@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class CardController extends GetxController {
   var cardList = List.generate(22, (index) => index).obs;
-  var selectedCard = [1,2,3].obs;
+  var selectedCard = [].obs;
   var isStarted = false.obs;
   var showResult = true.obs;
   var cards = [].obs;

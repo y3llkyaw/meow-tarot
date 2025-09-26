@@ -43,6 +43,15 @@ class MobileLayout extends StatefulWidget {
 
 class _MobileLayoutState extends State<MobileLayout> {
   final cardController = Get.put(CardController());
+
+  @override
+  void initState() {
+    super.initState();
+    if (cardController.selectedCard.length != 3) {
+      Get.offAllNamed("/");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +83,6 @@ class _MobileLayoutState extends State<MobileLayout> {
                 ),
               ),
               SizedBox(height: 20),
-          
               RowOrColumn(
                 isRow: false,
                 children: [
