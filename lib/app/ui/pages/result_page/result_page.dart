@@ -141,12 +141,12 @@ class _ResultCardState extends State<ResultCard> {
                         child: FlipCard(
                           backWidget: Image(
                             image: AssetImage(
-                                'image/cat-cards/processed_${widget.cardIndex}.png'),
+                                'image/processed_${widget.cardIndex}.png'),
                             height: 300,
                             fit: BoxFit.fitHeight,
                           ),
                           frontWidget: Image(
-                            image: AssetImage('image/dummy/back.png'),
+                            image: AssetImage('image/back.png'),
                             height: 300,
                             fit: BoxFit.fitHeight,
                           ),
@@ -341,12 +341,12 @@ class _DeveloperCardState extends State<DeveloperCard> {
                         },
                         child: FlipCard(
                           backWidget: Image(
-                            image: AssetImage('image/dummy/developer.png'),
+                            image: AssetImage('image/developer.png'),
                             height: 300,
                             fit: BoxFit.fill,
                           ),
                           frontWidget: Image(
-                            image: AssetImage('image/dummy/back.png'),
+                            image: AssetImage('image/back.png'),
                             height: 300,
                             fit: BoxFit.fitHeight,
                           ),

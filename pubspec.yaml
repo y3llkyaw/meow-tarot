@@ -61,9 +61,6 @@ flutter:
   assets:
     - assets/icons/
     - assets/image/
-    - assets/image/cards
-    - assets/image/cat-cards
-    - assets/image/dummy
     - assets/animation/
     - assets/data/
 
