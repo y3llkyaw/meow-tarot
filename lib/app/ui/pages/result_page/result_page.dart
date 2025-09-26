@@ -7,8 +7,23 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:tarot/app/controllers/card_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ResultPage extends GetView {
+class ResultPage extends StatefulWidget {
   const ResultPage({Key? key}) : super(key: key);
+
+  @override
+  State<ResultPage> createState() => _ResultPageState();
+}
+
+class _ResultPageState extends State<ResultPage> {
+  final CardController cardController = Get.put(CardController());
+
+  @override
+  void initState() {
+    super.initState();
+    if (cardController.selectedCard.length != 3) {
+      Get.offAllNamed("/");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +58,8 @@ class MobileLayout extends StatefulWidget {
 
 class _MobileLayoutState extends State<MobileLayout> {
   final cardController = Get.put(CardController());
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +91,6 @@ class _MobileLayoutState extends State<MobileLayout> {
                 ),
               ),
               SizedBox(height: 20),
-          
               RowOrColumn(
                 isRow: false,
                 children: [
@@ -147,13 +163,6 @@ class WebLayout extends StatefulWidget {
 class _WebLayoutState extends State<WebLayout> {
   final cardController = Get.put(CardController());
 
-  @override
-  void initState() {
-    super.initState();
-    if (cardController.selectedCard.length != 3) {
-      Get.offAllNamed("/");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -429,7 +438,7 @@ class _ResultCardState extends State<ResultCard> {
                               const SizedBox(height: 10),
                             ],
                             Align(
-                              alignment: Alignment.centerLeft,
+                              alignment: Alignment.center,
                               child: OutlinedButton(
                                 onPressed: () {},
                                 style: OutlinedButton.styleFrom(
@@ -442,35 +451,33 @@ class _ResultCardState extends State<ResultCard> {
                           ],
                         ),
                       ),
-                      Center(
-                        child: AnimatedPositioned(
-                          curve: Curves.easeInCirc,
-                          duration: Duration(milliseconds: 500),
-                          left: 10,
-                          top:
-                              flipController.state?.isFront == true ? 130 : 300,
-                          child: AnimatedOpacity(
-                            opacity: flipController.state?.isFront == true
-                                ? 1.0
-                                : 0.0,
-                            duration: Duration(milliseconds: 200),
-                            curve: Curves.easeIn,
-                            child: Column(
-                              children: [
-                                Text(
-                                  cardTag,
-                                  style: Get.textTheme.headlineLarge!.copyWith(
-                                      color: const Color.fromARGB(
-                                          255, 142, 137, 122)),
-                                ),
-                                Text(
-                                  "click the cards to flip",
-                                  style: Get.textTheme.bodyLarge!.copyWith(
-                                      color: const Color.fromARGB(
-                                          255, 142, 137, 122)),
-                                ),
-                              ],
-                            ),
+                      AnimatedPositioned(
+                        curve: Curves.easeInCirc,
+                        duration: Duration(milliseconds: 500),
+                        // left: 10,
+                        top:
+                            flipController.state?.isFront == true ? 130 : 300,
+                        child: AnimatedOpacity(
+                          opacity: flipController.state?.isFront == true
+                              ? 1.0
+                              : 0.0,
+                          duration: Duration(milliseconds: 200),
+                          curve: Curves.easeIn,
+                          child: Column(
+                            children: [
+                              Text(
+                                cardTag,
+                                style: Get.textTheme.headlineLarge!.copyWith(
+                                    color: const Color.fromARGB(
+                                        255, 142, 137, 122)),
+                              ),
+                              Text(
+                                "click the cards to flip",
+                                style: Get.textTheme.bodyLarge!.copyWith(
+                                    color: const Color.fromARGB(
+                                        255, 142, 137, 122)),
+                              ),
+                            ],
                           ),
                         ),
                       )
