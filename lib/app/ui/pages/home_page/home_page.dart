@@ -61,6 +61,25 @@ class MobileLayout extends StatelessWidget {
           children: [
             Center(
               child: Text(
+                "This App only Contains 22 major aracana cards"
+                    .capitalize!
+                    .toString(),
+                style: Get.textTheme.bodySmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Center(
+              child: Text(
+                "All of the cards graphic are from nanobanana 🍌 gemini",
+                style: Get.textTheme.bodySmall!.copyWith(),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Text(
                 "Close your eyes, reflect, ask yourself a question.\nThen choose 3 cards.",
                 style: Get.textTheme.bodyMedium!.copyWith(),
                 textAlign: TextAlign.center,
@@ -230,6 +249,25 @@ class WebLayout extends StatelessWidget {
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Center(
+              child: Text(
+                "This App only Contains 22 major aracana cards"
+                    .capitalize!
+                    .toString(),
+                style: Get.textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Center(
+              child: Text(
+                "All of the cards graphic are from nanobanana 🍌 gemini",
+                style: Get.textTheme.bodyMedium!.copyWith(),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             Center(
               child: Text(
                 "Close your eyes, reflect, ask yourself a question. Then click the button to get your cards.",
