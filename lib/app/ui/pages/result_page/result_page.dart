@@ -7,14 +7,144 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:tarot/app/controllers/card_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ResultPage extends StatefulWidget {
+class ResultPage extends GetView {
   const ResultPage({Key? key}) : super(key: key);
 
   @override
-  State<ResultPage> createState() => _ResultPageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 30),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth < 600) {
+              // Mobile
+              return MobileLayout();
+            } else if (constraints.maxWidth < 1024) {
+              // Tablet
+              return MobileLayout();
+            } else {
+              // Web / Desktop
+              return WebLayout();
+            }
+          },
+        ),
+      ),
+    );
+  }
 }
 
-class _ResultPageState extends State<ResultPage> {
+class MobileLayout extends StatefulWidget {
+  const MobileLayout({Key? key}) : super(key: key);
+
+  @override
+  State<MobileLayout> createState() => _MobileLayoutState();
+}
+
+class _MobileLayoutState extends State<MobileLayout> {
+  final cardController = Get.put(CardController());
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Obx(() {
+        // Wait for cards to load and for 3 cards to be selected
+        if (cardController.cards.isEmpty ||
+            cardController.selectedCard.length < 3) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 20),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                      // alignment: WrapAlignment.start,
+                      children: cardController.selectedCard
+                          .map<Widget>(
+                            (cardIndex) => ResultCard(
+                              cardIndex: cardIndex,
+                              isMobile: true,
+                            ),
+                          )
+                          .toList()),
+                ),
+              ),
+              SizedBox(height: 20),
+              Spacer(),
+              RowOrColumn(
+                isRow: false,
+                children: [
+                  Text("Created By Yell Htet Kyaw"),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 10,
+                      children: [
+                        IconButton(
+                          onPressed: () async {
+                            final Uri emailLaunchUri = Uri(
+                              scheme: 'mailto',
+                              path: 'mgyehtetkyaw@gmail.com',
+                            );
+                            await launchUrl(emailLaunchUri);
+                          },
+                          icon: Icon(Icons.email),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            await launchUrl(Uri.parse(
+                                "https://www.linkedin.com/in/yellhtetkyaw"));
+                          },
+                          icon: Icon(BoxIcons.bxl_linkedin),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            try {
+                              await launchUrl(
+                                Uri.parse("https://www.github.com/y3llkyaw"),
+                                mode: LaunchMode.externalApplication,
+                              );
+                            } catch (e) {
+                              log(e.toString());
+                            }
+                          },
+                          icon: Icon(BoxIcons.bxl_github),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text("Powered By Flutter"),
+                ],
+              )
+            ],
+          ),
+        );
+      }),
+      floatingActionButton: Align(
+        alignment: Alignment.centerLeft,
+        child: FloatingActionButton(
+            child: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Get.back();
+            }),
+      ),
+    );
+  }
+}
+
+class WebLayout extends StatefulWidget {
+  const WebLayout({Key? key}) : super(key: key);
+
+  @override
+  State<WebLayout> createState() => _WebLayoutState();
+}
+
+class _WebLayoutState extends State<WebLayout> {
   final cardController = Get.put(CardController());
 
   @override
@@ -42,20 +172,63 @@ class _ResultPageState extends State<ResultPage> {
               SizedBox(height: 20),
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Wrap(
-                      alignment: WrapAlignment.start,
-                      children: cardController.selectedCard
-                              .map<Widget>(
-                                (cardIndex) => SizedBox(
-                                    width: Get.width * 0.4,
-                                    child: ResultCard(cardIndex: cardIndex)),
-                              )
-                              .toList() +
-                          [DeveloperCard()]),
-                ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Wrap(
+                        alignment: WrapAlignment.center,
+                        children: cardController.selectedCard
+                            .map<Widget>(
+                              (cardIndex) => SizedBox(
+                                  width: Get.width * 0.4,
+                                  child: ResultCard(cardIndex: cardIndex)),
+                            )
+                            .toList())),
               ),
               SizedBox(height: 20),
+              Row(
+                spacing: 30,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Created By Yell Htet Kyaw"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    spacing: 10,
+                    children: [
+                      IconButton(
+                        onPressed: () async {
+                          final Uri emailLaunchUri = Uri(
+                            scheme: 'mailto',
+                            path: 'mgyehtetkyaw@gmail.com',
+                          );
+                          await launchUrl(emailLaunchUri);
+                        },
+                        icon: Icon(Icons.email),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          await launchUrl(Uri.parse(
+                              "https://www.linkedin.com/in/yellhtetkyaw"));
+                        },
+                        icon: Icon(BoxIcons.bxl_linkedin),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          try {
+                            await launchUrl(
+                              Uri.parse("https://www.github.com/y3llkyaw"),
+                              mode: LaunchMode.externalApplication,
+                            );
+                          } catch (e) {
+                            log(e.toString());
+                          }
+                        },
+                        icon: Icon(BoxIcons.bxl_github),
+                      ),
+                    ],
+                  ),
+                  Text("Powered By Flutter"),
+                ],
+              )
             ],
           ),
         );
@@ -72,9 +245,27 @@ class _ResultPageState extends State<ResultPage> {
   }
 }
 
+class ExpandedOrContainer extends StatelessWidget {
+  const ExpandedOrContainer(
+      {Key? key, required this.child, this.isExpanded = true})
+      : super(key: key);
+  final Widget child;
+  final bool isExpanded;
+  @override
+  Widget build(BuildContext context) {
+    return isExpanded
+        ? Expanded(child: child)
+        : Container(
+            child: child,
+          );
+  }
+}
+
 class ResultCard extends StatefulWidget {
   final int cardIndex;
-  const ResultCard({Key? key, required this.cardIndex}) : super(key: key);
+  final bool isMobile;
+  const ResultCard({Key? key, required this.cardIndex, this.isMobile = false})
+      : super(key: key);
   @override
   State<ResultCard> createState() => _ResultCardState();
 }
@@ -113,14 +304,13 @@ class _ResultCardState extends State<ResultCard> {
         return Opacity(
           opacity: value,
           child: Container(
-            width: Get.width * 0.4,
-            margin: const EdgeInsets.symmetric(vertical: 12),
-            padding: const EdgeInsets.all(16),
+            margin: EdgeInsets.only(top: 20),
+            width: widget.isMobile ? Get.width * 0.8 : Get.width * 0.4,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: RowOrColumn(
+              isRow: !widget.isMobile,
               children: [
                 Hero(
                   tag: "selected_${widget.cardIndex}",
@@ -159,7 +349,8 @@ class _ResultCardState extends State<ResultCard> {
                 ),
                 const SizedBox(width: 16),
                 // Text Section
-                Expanded(
+                ExpandedOrContainer(
+                  isExpanded: !widget.isMobile,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
@@ -171,6 +362,9 @@ class _ResultCardState extends State<ResultCard> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(
+                              height: 20,
+                            ),
                             Center(
                               child: Text(
                                 card['name'] ?? "Card Name",
@@ -247,31 +441,35 @@ class _ResultCardState extends State<ResultCard> {
                           ],
                         ),
                       ),
-                      AnimatedPositioned(
-                        curve: Curves.easeInCirc,
-                        duration: Duration(milliseconds: 500),
-                        left: 10,
-                        top: flipController.state?.isFront == true ? 130 : 300,
-                        child: AnimatedOpacity(
-                          opacity:
-                              flipController.state?.isFront == true ? 1.0 : 0.0,
-                          duration: Duration(milliseconds: 200),
-                          curve: Curves.easeIn,
-                          child: Column(
-                            children: [
-                              Text(
-                                cardTag,
-                                style: Get.textTheme.headlineLarge!.copyWith(
-                                    color: const Color.fromARGB(
-                                        255, 142, 137, 122)),
-                              ),
-                              Text(
-                                "click the cards to flip",
-                                style: Get.textTheme.bodyLarge!.copyWith(
-                                    color: const Color.fromARGB(
-                                        255, 142, 137, 122)),
-                              ),
-                            ],
+                      Center(
+                        child: AnimatedPositioned(
+                          curve: Curves.easeInCirc,
+                          duration: Duration(milliseconds: 500),
+                          left: 10,
+                          top:
+                              flipController.state?.isFront == true ? 130 : 300,
+                          child: AnimatedOpacity(
+                            opacity: flipController.state?.isFront == true
+                                ? 1.0
+                                : 0.0,
+                            duration: Duration(milliseconds: 200),
+                            curve: Curves.easeIn,
+                            child: Column(
+                              children: [
+                                Text(
+                                  cardTag,
+                                  style: Get.textTheme.headlineLarge!.copyWith(
+                                      color: const Color.fromARGB(
+                                          255, 142, 137, 122)),
+                                ),
+                                Text(
+                                  "click the cards to flip",
+                                  style: Get.textTheme.bodyLarge!.copyWith(
+                                      color: const Color.fromARGB(
+                                          255, 142, 137, 122)),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       )
@@ -284,6 +482,24 @@ class _ResultCardState extends State<ResultCard> {
         );
       },
     );
+  }
+}
+
+class RowOrColumn extends StatelessWidget {
+  const RowOrColumn({Key? key, this.children = const [], this.isRow = true})
+      : super(key: key);
+  final List<Widget> children;
+  final bool isRow;
+  @override
+  Widget build(BuildContext context) {
+    return isRow
+        ? Row(
+            children: children,
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: children,
+          );
   }
 }
 
