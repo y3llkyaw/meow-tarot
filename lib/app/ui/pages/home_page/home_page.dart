@@ -156,7 +156,7 @@ class CardBackSide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      "assets/image/back.png",
+      "assets/image/back.webp",
       width: 200,
     );
   }
