@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:get/get.dart';
 import 'app/data/services/dependency_injection.dart';
 import 'app/data/services/theme_service.dart';
@@ -12,7 +13,7 @@ import 'app/ui/utils/util.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DependecyInjection.init();
-
+  usePathUrlStrategy();
   runApp(const MyApp());
 }
 
@@ -21,8 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme =
-        createTextTheme(context,  "EB Garamond","Aladin");
+    TextTheme textTheme = createTextTheme(context, "EB Garamond", "Aladin");
     Themes theme = Themes(textTheme);
     return ScreenUtilInit(
       builder: (_, __) {
