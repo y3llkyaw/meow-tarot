@@ -67,7 +67,6 @@ class _MobileLayoutState extends State<MobileLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        // Wait for cards to load and for 3 cards to be selected
         if (cardController.cards.isEmpty ||
             cardController.selectedCard.length < 3) {
           return Center(child: CircularProgressIndicator());
@@ -304,7 +303,8 @@ class _ResultCardState extends State<ResultCard> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> card = cardController.cards[widget.cardIndex];
+    final Map<String, dynamic> card =
+        cardController.cards[cardController.cardList[widget.cardIndex]];
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(
         begin: 0.0,
@@ -324,7 +324,7 @@ class _ResultCardState extends State<ResultCard> {
               isRow: !widget.isMobile,
               children: [
                 Hero(
-                  tag: "selected_${widget.cardIndex}",
+                  tag: "selected_${card["number"]}",
                   child: Material(
                     color: Colors.transparent,
                     child: SizedBox(
@@ -342,7 +342,7 @@ class _ResultCardState extends State<ResultCard> {
                         child: FlipCard(
                           backWidget: Image(
                             image: AssetImage(
-                                'assets/image/processed_${widget.cardIndex}.webp'),
+                                'assets/image/processed_${card["number"]}.webp'),
                             height: 300,
                             fit: BoxFit.fitHeight,
                           ),
