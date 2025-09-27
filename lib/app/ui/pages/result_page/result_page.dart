@@ -5,6 +5,8 @@ import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:tarot/app/controllers/card_controller.dart';
+import 'package:tarot/app/data/models/tarot_card.dart';
+import 'package:tarot/app/ui/pages/detail_page/detail_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ResultPage extends StatefulWidget {
@@ -27,22 +29,24 @@ class _ResultPageState extends State<ResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 30),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth < 600) {
-              // Mobile
-              return MobileLayout();
-            } else if (constraints.maxWidth < 1024) {
-              // Tablet
-              return MobileLayout();
-            } else {
-              // Web / Desktop
-              return WebLayout();
-            }
-          },
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          // padding: EdgeInsets.symmetric(vertical: 30),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth < 600) {
+                // Mobile
+                return MobileLayout();
+              } else if (constraints.maxWidth < 1024) {
+                // Tablet
+                return MobileLayout();
+              } else {
+                // Web / Desktop
+                return WebLayout();
+              }
+            },
+          ),
         ),
       ),
     );
@@ -58,7 +62,6 @@ class MobileLayout extends StatefulWidget {
 
 class _MobileLayoutState extends State<MobileLayout> {
   final cardController = Get.put(CardController());
-
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +166,6 @@ class WebLayout extends StatefulWidget {
 class _WebLayoutState extends State<WebLayout> {
   final cardController = Get.put(CardController());
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -265,7 +267,6 @@ class ExpandedOrContainer extends StatelessWidget {
     return isExpanded
         ? Expanded(child: child)
         : Container(
-            height: 400,
             child: child,
           );
   }
@@ -303,7 +304,7 @@ class _ResultCardState extends State<ResultCard> {
 
   @override
   Widget build(BuildContext context) {
-    final card = cardController.cards[widget.cardIndex];
+    final Map<String, dynamic> card = cardController.cards[widget.cardIndex];
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(
         begin: 0.0,
@@ -440,7 +441,11 @@ class _ResultCardState extends State<ResultCard> {
                             Align(
                               alignment: Alignment.center,
                               child: OutlinedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.to(DetailPage(
+                                    card: TarotCard.fromJson(card),
+                                  ));
+                                },
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor: Colors.amber[200],
                                   side: BorderSide(color: Colors.amber[200]!),
@@ -455,12 +460,10 @@ class _ResultCardState extends State<ResultCard> {
                         curve: Curves.easeInCirc,
                         duration: Duration(milliseconds: 500),
                         // left: 10,
-                        top:
-                            flipController.state?.isFront == true ? 130 : 300,
+                        top: flipController.state?.isFront == true ? 130 : 300,
                         child: AnimatedOpacity(
-                          opacity: flipController.state?.isFront == true
-                              ? 1.0
-                              : 0.0,
+                          opacity:
+                              flipController.state?.isFront == true ? 1.0 : 0.0,
                           duration: Duration(milliseconds: 200),
                           curve: Curves.easeIn,
                           child: Column(
